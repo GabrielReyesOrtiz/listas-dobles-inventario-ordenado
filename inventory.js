@@ -84,12 +84,19 @@ export default class Inventory {
     while (temp.getSiguiente() != null) {
       if (temp.getSiguiente().getId() == idDelete) {
         elim = temp.getSiguiente();
-        temp.setSiguiente(temp.getSiguiente().getSiguiente());
-        elim.getSiguiente().setAnterior(temp);
-        elim.setSiguiente(null);
-        elim.setAnterior(null);
-        product = `El elemento eliminado es  ID: ${elim.getId()}  Nombre: ${elim.getName()} Cantidad: ${elim.getQuantity()}  Costo: ${elim.getCost()} <br>`;
-        return product;
+        if (elim.getSiguiente() != null) {
+          temp.setSiguiente(temp.getSiguiente().getSiguiente());
+          elim.getSiguiente().setAnterior(temp);
+          elim.setSiguiente(null);
+          elim.setAnterior(null);
+          product = `El elemento eliminado es  ID: ${elim.getId()}  Nombre: ${elim.getName()} Cantidad: ${elim.getQuantity()}  Costo: ${elim.getCost()} <br>`;
+          return product;
+        } else {
+          temp.setSiguiente(null);
+          elim.setAnterior(null);
+          product = `El elemento eliminado es  ID: ${elim.getId()}  Nombre: ${elim.getName()} Cantidad: ${elim.getQuantity()}  Costo: ${elim.getCost()} <br>`;
+          return product;
+        }
       }
       temp = temp.getSiguiente();
     }
