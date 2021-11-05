@@ -5,55 +5,47 @@ export default class Inventory {
   }
 
   add(product) {
-    if (this.inicio == null) {
-      this.inicio = product;
-
-      return true;
-    } else {
-      let aux = this.inicio;
-      while (product.getId() > aux.getId() && aux.getSiguiente() != null) {
-        aux = aux.getSiguiente();
-      }
-
-      if (product.getId() < aux.getId() && aux.getAnterior() == null) {
-        aux.setAnterior(product);
-        product.setSiguiente(aux);
+    if (this._buscar(product.getId()) == true) {
+      if (this.inicio == null) {
         this.inicio = product;
 
         return true;
+      } else {
+        let aux = this.inicio;
+        while (product.getId() > aux.getId() && aux.getSiguiente() != null) {
+          aux = aux.getSiguiente();
+        }
+
+        if (product.getId() < aux.getId() && aux.getAnterior() == null) {
+          aux.setAnterior(product);
+          product.setSiguiente(aux);
+          this.inicio = product;
+
+          return true;
+        }
+        if (aux.getSiguiente() == null && aux.getId() < product.getId()) {
+          aux.setSiguiente(product);
+          product.setAnterior(aux);
+
+          return true;
+        }
+
+        if (aux.getId() > product.getId() || aux.getSiguiente() != null) {
+          product.setAnterior(aux.getAnterior());
+
+          aux.getAnterior().setSiguiente(product);
+
+          product.setSiguiente(aux);
+          aux.setAnterior(product);
+
+          return true;
+        }
       }
-      if (aux.getSiguiente() == null && aux.getId() < product.getId()) {
-        aux.setSiguiente(product);
-        product.setAnterior(aux);
-
-        return true;
-      }
-
-      if (aux.getId() > product.getId() || aux.getSiguiente() != null) {
-        product.setAnterior(aux.getAnterior());
-
-        aux.getAnterior().setSiguiente(product);
-
-        product.setSiguiente(aux);
-        aux.setAnterior(product);
-
-        return true;
-      }
+    } else {
+      return false;
     }
   }
 
-  /* _buscar() {
-      let product = "El producto no existe";
-      let aux = this.inicio;
-      while (aux != null) {
-        if (aux.getId() == idProduct) {
-          product = ` ID: ${aux.getId()}  Nombre: ${aux.getName()} Cantidad: ${aux.getQuantity()}  Costo: ${aux.getCost()} <br>`;
-          return product;
-        }
-        aux = aux.getSiguiente();
-      }
-      return product;
-    }*/
   buscar(idProduct) {
     let product = "El producto no existe";
     let aux = this.inicio;
@@ -65,6 +57,17 @@ export default class Inventory {
       aux = aux.getSiguiente();
     }
     return product;
+  }
+
+  _buscar(idProduct) {
+    let aux = this.inicio;
+    while (aux != null) {
+      if (aux.getId() == idProduct) {
+        return false;
+      }
+      aux = aux.getSiguiente();
+    }
+    return true;
   }
 
   eliminar(idDelete) {
