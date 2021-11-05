@@ -65,6 +65,12 @@ class App {
         "Se agrego correctamente nuevo producto";
       return;
     }
+
+    if (added === 3) {
+      document.getElementById("elementAdd").innerHTML =
+        "No puedes agregar mas de 20 productos";
+      return;
+    }
   };
 
   _delete = () => {

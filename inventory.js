@@ -5,45 +5,63 @@ export default class Inventory {
   }
 
   add(product) {
-    if (this._buscar(product.getId()) == true) {
-      if (this.inicio == null) {
-        this.inicio = product;
-
-        return true;
-      } else {
-        let aux = this.inicio;
-        while (product.getId() > aux.getId() && aux.getSiguiente() != null) {
-          aux = aux.getSiguiente();
-        }
-
-        if (product.getId() < aux.getId() && aux.getAnterior() == null) {
-          aux.setAnterior(product);
-          product.setSiguiente(aux);
+    if (this._cont() < 20) {
+      if (this._buscar(product.getId()) == true) {
+        if (this.inicio == null) {
           this.inicio = product;
 
           return true;
+        } else {
+          let aux = this.inicio;
+          while (product.getId() > aux.getId() && aux.getSiguiente() != null) {
+            aux = aux.getSiguiente();
+          }
+
+          if (product.getId() < aux.getId() && aux.getAnterior() == null) {
+            aux.setAnterior(product);
+            product.setSiguiente(aux);
+            this.inicio = product;
+
+            return true;
+          }
+          if (aux.getSiguiente() == null && aux.getId() < product.getId()) {
+            aux.setSiguiente(product);
+            product.setAnterior(aux);
+
+            return true;
+          }
+
+          if (aux.getId() > product.getId() || aux.getSiguiente() != null) {
+            product.setAnterior(aux.getAnterior());
+
+            aux.getAnterior().setSiguiente(product);
+
+            product.setSiguiente(aux);
+            aux.setAnterior(product);
+
+            return true;
+          }
         }
-        if (aux.getSiguiente() == null && aux.getId() < product.getId()) {
-          aux.setSiguiente(product);
-          product.setAnterior(aux);
-
-          return true;
-        }
-
-        if (aux.getId() > product.getId() || aux.getSiguiente() != null) {
-          product.setAnterior(aux.getAnterior());
-
-          aux.getAnterior().setSiguiente(product);
-
-          product.setSiguiente(aux);
-          aux.setAnterior(product);
-
-          return true;
-        }
+      } else {
+        return false;
       }
     } else {
-      return false;
+      return 3;
     }
+  }
+
+  _cont() {
+    let cont = 1;
+    let aux = this.inicio;
+    if (this.inicio == null) {
+      return cont;
+    }
+
+    while (aux.getSiguiente() != null) {
+      cont++;
+      aux = aux.getSiguiente();
+    }
+    return cont;
   }
 
   buscar(idProduct) {
