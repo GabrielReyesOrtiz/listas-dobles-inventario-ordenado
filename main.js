@@ -15,6 +15,9 @@ class App {
 
     let btnList = document.querySelector("#btnList");
     btnList.addEventListener("click", this._list);
+
+    let btnListInversa = document.querySelector("#btnListInversa");
+    btnListInversa.addEventListener("click", this._listInversa);
   }
 
   _readProduct() {
@@ -91,6 +94,11 @@ class App {
 
   _list = () => {
     document.getElementById("lista").innerHTML = this._inventory.listar();
+  };
+
+  _listInversa = () => {
+    document.getElementById("listaInversa").innerHTML =
+      this._inventory.listarInverso();
   };
 }
 new App();

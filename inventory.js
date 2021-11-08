@@ -1,7 +1,6 @@
 export default class Inventory {
   constructor() {
     this.inicio = null;
-    this.ultimo = null;
   }
 
   add(product) {
@@ -139,6 +138,25 @@ export default class Inventory {
         num++;
       }
       lista = ` ${lista}  ${num} ----> ID: ${aux.getId()}  Nombre: ${aux.getName()} Cantidad: ${aux.getQuantity()}  Costo: ${aux.getCost()} Total: $ ${aux.getTotal()} Su siguiente es:  ${aux.getSiguiente()}  <br>`;
+    }
+    return lista;
+  }
+
+  listarInverso() {
+    let lista = "";
+    let aux = this.inicio;
+    let num = 1;
+    if (this.inicio == null) {
+      return "No se han agregado Productos";
+    } else {
+      while (aux.getSiguiente() != null) {
+        lista = `  ${num}  ---->  ID: ${aux.getId()}  Nombre:  ${aux.getName()} Cantidad:  ${aux.getQuantity()}  Costo: $  ${aux.getCost()} Total: $ ${aux.getTotal()} Su siguiente es:  ${aux
+          .getSiguiente()
+          .getName()} <br> ${lista} <br>`;
+        aux = aux.getSiguiente();
+        num++;
+      }
+      lista = `  ${num} ----> ID: ${aux.getId()}  Nombre: ${aux.getName()} Cantidad: ${aux.getQuantity()}  Costo: ${aux.getCost()} Total: $ ${aux.getTotal()} Su siguiente es:  ${aux.getSiguiente()}<br> ${lista}  <br>`;
     }
     return lista;
   }
