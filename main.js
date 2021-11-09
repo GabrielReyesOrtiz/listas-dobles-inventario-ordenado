@@ -54,25 +54,25 @@ class App {
     if (!product) {
       document.getElementById("elementAdd").innerHTML =
         "Error todos los elementos son requeridos";
-      return;
+      return false;
     }
     let added = this._inventory.add(product);
 
-    if (added === false) {
+    if (added === 2) {
       document.getElementById("elementAdd").innerHTML =
         "Error, Producto ya registrado";
-      return;
+      return false;
     }
-    if (added === true) {
+    if (added === 1) {
       document.getElementById("elementAdd").innerHTML =
         "Se agrego correctamente nuevo producto";
-      return;
+      return true;
     }
 
     if (added === 3) {
       document.getElementById("elementAdd").innerHTML =
         "No puedes agregar mas de 20 productos";
-      return;
+      return false;
     }
   };
 

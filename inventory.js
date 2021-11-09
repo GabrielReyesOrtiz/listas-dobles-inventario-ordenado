@@ -9,7 +9,7 @@ export default class Inventory {
         if (this.inicio == null) {
           this.inicio = product;
 
-          return true;
+          return 1;
         } else {
           let aux = this.inicio;
           while (product.getId() > aux.getId() && aux.getSiguiente() != null) {
@@ -21,13 +21,13 @@ export default class Inventory {
             product.setSiguiente(aux);
             this.inicio = product;
 
-            return true;
+            return 1;
           }
           if (aux.getSiguiente() == null && aux.getId() < product.getId()) {
             aux.setSiguiente(product);
             product.setAnterior(aux);
 
-            return true;
+            return 1;
           }
 
           if (aux.getId() > product.getId() || aux.getSiguiente() != null) {
@@ -38,11 +38,11 @@ export default class Inventory {
             product.setSiguiente(aux);
             aux.setAnterior(product);
 
-            return true;
+            return 1;
           }
         }
       } else {
-        return false;
+        return 2;
       }
     } else {
       return 3;
